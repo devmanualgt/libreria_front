@@ -63,88 +63,17 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
   }
-
-  isLoggedIn(): boolean {
-    const token = this.getToken();
-    if (token) {
-      // console.log(token);
-      const decodedToken: any = jwtDecode(token); // Decodifico el token
-      // console.log(decodedToken);
-      localStorage.setItem('currentUser', JSON.stringify(decodedToken));
-
-      const expirationDate = new Date(decodedToken.exp * 1000); // Multiplico por 1000 para convertir a milisegundos
-      return expirationDate > new Date(); // true or false
-    }
-    return false;
-  }
-    // Darle ojo a estos metodos
-
-  // login(post: any): Observable<any> {
-  //   return this.http.post<any>(this.apiUrl, post);
-  // }
-
-  getUsers(): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'access_token': `${this.getToken()}`,
   
-    });
-
-    return this.http.get(`${this.apiUrl}/users`, { headers });
-  }
-
   
-
-  getUserByid(id:number): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'access_token': `${this.getToken()}`,
+  // libros-----------------------------
   
-    });
-    return this.http.get(`${this.apiUrl}/users/${id}`, { headers });
- 
-  }
-
-  GetTypesUsers(): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'access_token': `${this.getToken()}`,
-    });
-    return this.http.get(`${this.apiUrl}/users/types`, { headers });
-
-  }
-
-  newUser(newUser: NewUser ){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'access_token': `${this.getToken()}`
-
-    });
-      
-    return this.http.post<any>(`${this.apiUrl}/users/types`,newUser, {headers}).subscribe({
-        next: (response)=> {
-          response;
-          this.message.successAlert();
-          this.router.navigate(['/welcome']);
-        },
-        error: (error) => {
-          error;
-          this.message.errorAlert(error.error.message);
-
-        }
-      });
-    
-  }
-
- // libros-----------------------------
-
   getAllBooks(): Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${this.getToken()}`,
       // 'access_token': `Bearer ${this.getToken()}`,
       // 'accessToken': `${this.getToken()}`,
-  
+      
     });
 
     return this.http.get<any>(`${this.apiUrl}books`, { headers });
@@ -153,11 +82,11 @@ export class AuthService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${this.getToken()}`
-
-    });
       
+    });
+    
     return this.http.post<any>(`${this.apiUrl}books`,newBook, {headers}).subscribe({
-        next: (response)=> {
+      next: (response)=> {
           response;
           this.message.successAlert();
           this.router.navigate(['/welcome']);
@@ -169,13 +98,13 @@ export class AuthService {
         }
       });
     
-  }
+    }
 
-  getBookByid(id:number): Observable<any>{
-    const headers = new HttpHeaders({
+    getBookByid(id:number): Observable<any>{
+      const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${this.getToken()}`,
-  
+      
     });
     return this.http.get(`${this.apiUrl}books/${id}`, { headers });
  
@@ -201,20 +130,89 @@ export class AuthService {
     });
   }
 
-
+  
   updateBook(bookId: string, updatedData: newBook) {
-    // const idBook = bookId;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${this.getToken()}`
     });
+    
     return this.http
-      .put<newBook>(`${this.apiUrl}books/${bookId}`, updatedData, { headers })
-      // .put<newBook>(`${this.apiUrl}books/1`, updatedData, { headers })
-      .pipe(map((data: newBook) => data));
+    .put<newBook>(`${this.apiUrl}books/${bookId}`, updatedData, { headers })
+    .pipe(map((data: newBook) => data))
+    
+    
+
   }
   
+  //pendientes de implementar
 
+  newUser(newUser: NewUser ){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'access_token': `${this.getToken()}`
 
+    });
+      
+    return this.http.post<any>(`${this.apiUrl}/users/types`,newUser, {headers}).subscribe({
+        next: (response)=> {
+          response;
+          this.message.successAlert();
+          this.router.navigate(['/welcome']);
+        },
+        error: (error) => {
+          error;
+          this.message.errorAlert(error.error.message);
+          
+        }
+      });
+    
+  }
 
+    isLoggedIn(): boolean {
+      const token = this.getToken();
+      if (token) {
+        // console.log(token);
+        const decodedToken: any = jwtDecode(token); // Decodifico el token
+        // console.log(decodedToken);
+        localStorage.setItem('currentUser', JSON.stringify(decodedToken));
+  
+        const expirationDate = new Date(decodedToken.exp * 1000); // Multiplico por 1000 para convertir a milisegundos
+        return expirationDate > new Date(); // true or false
+      }
+      return false;
+    }
+  
+    getUsers(): Observable<any>{
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'access_token': `${this.getToken()}`,
+    
+      });
+  
+      return this.http.get(`${this.apiUrl}/users`, { headers });
+    }
+  
+  
+    getUserByid(id:number): Observable<any>{
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'access_token': `${this.getToken()}`,
+    
+      });
+      return this.http.get(`${this.apiUrl}/users/${id}`, { headers });
+   
+    }
+  
+    GetTypesUsers(): Observable<any>{
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'access_token': `${this.getToken()}`,
+      });
+      return this.http.get(`${this.apiUrl}/users/types`, { headers });
+  
+    }
+  
+  
+  
 }

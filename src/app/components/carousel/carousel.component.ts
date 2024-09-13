@@ -8,7 +8,8 @@ import { Component } from '@angular/core';
 
   <div id="carouselExampleCaptions" class="carousel slide" 
   style="
-    height:600px;
+    max-height:600px;
+    height: 100%;
     overflow: hidden;
     ">
     <div class="carousel-indicators">
