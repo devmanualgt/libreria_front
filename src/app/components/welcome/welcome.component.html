@@ -1,0 +1,22 @@
+<app-header></app-header>
+<section class="container">
+    
+    <div class="container d-flex justify-content-between align-items-center my-5">
+        <h2>Libros</h2>
+        <a class="btn btn-primary" href="/new-book" ><i class="bi bi-person-plus"></i> Nuevo Libro</a>
+    </div>
+    
+    <div class="row text-center ">
+
+            <!-- <h3>Vista de {{currentUser.type_user.type}}</h3> -->
+            @for (book of booksData; track $index) {
+                <div class="col d-flex my-2 justify-content-center">
+                    <!-- <app-user-card [user]="user"></app-user-card> -->
+                     <app-book-card [book]="book"></app-book-card>
+                </div>
+            }  
+    </div>
+
+</section>
+
+<app-footer/>

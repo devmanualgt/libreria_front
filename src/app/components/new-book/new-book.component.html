@@ -1,0 +1,91 @@
+<app-header></app-header>
+<div class="pt-3">
+  <h2 class="mb-2 text-center">New Book</h2>
+
+  <div class="container d-flex justify-content-end">
+    
+    <a  class="btn btn-danger" href="/welcome"><i class="bi bi-arrow-left-circle"></i> Regresar</a>
+  </div>
+
+
+
+  <form [formGroup]="newUserForm" (ngSubmit)="newBook()" id="newUserForm"
+  class="container pb-2" style="width: 400px; max-width: 100%; ">
+    
+    <div class="mb-3">
+      <label for="title" class="form-label">title</label>
+      <input formControlName="title" required autocomplete="off"
+        type="text" class="form-control" id="title">
+    <div class="validacion" *ngIf="newUserForm.get('title')?.hasError('required') &&  newUserForm.get('title')?.touched" >Titulo obligatorio</div>
+      
+    <div class="mb-3">
+      <label for="author" class="form-label">Autor</label>
+      <input formControlName="author" required autocomplete="off"
+        type="text" class="form-control" id="author">
+      <div class="validacion" *ngIf="newUserForm.get('author')?.hasError('required') &&  newUserForm.get('author')?.touched" >Nombre de usuario obligatorio</div>
+      
+    </div>
+
+    <div class="mb-3">
+      <label for="isbn" class="form-label">Isbn</label>
+      <input formControlName="isbn" required autocomplete="off"
+        type="number" class="form-control" id="isbn">
+      <div class="validacion" *ngIf="newUserForm.get('isbn')?.hasError('required') &&  newUserForm.get('isbn')?.touched" >Apellido obligatorio</div>
+      
+    </div>
+    </div>
+    <div class="mb-3">
+      <label for="publish_year" class="form-label">Year publicacion</label>
+      <input formControlName="publish_year" required
+        type="number" class="form-control" id="publish_year">
+      <div class="validacion" *ngIf="newUserForm.get('publish_year')?.hasError('required') &&  newUserForm.get('publish_year')?.touched" >Clave obligatorio</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="copies" class="form-label">Copias</label>
+      <input formControlName="copies" required
+        type="number" class="form-control" id="copies">
+      <div class="validacion" *ngIf="newUserForm.get('copies')?.hasError('required') &&  newUserForm.get('copies')?.touched" >Cantidad de Copias obligatorio</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Cantidad</label>
+      <input formControlName="quantity" required
+        type="number" class="form-control" id="quantity">
+      <div class="validacion" *ngIf="newUserForm.get('quantity')?.hasError('required') &&  newUserForm.get('quantity')?.touched" >Cantidad obligatorio</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="topics" class="form-label">Topics</label>
+      <input formControlName="topics" required
+        type="text" class="form-control" id="topics">
+      <div class="validacion" *ngIf="newUserForm.get('topics')?.hasError('required') &&  newUserForm.get('topics')?.touched" >Topics obligatorio</div>
+    </div>
+    
+    
+
+    <!-- <div class="mb-3">
+      <label for="type_user" class="form-label">TypeUser</label>
+      <select formControlName="type_user"
+        class="form-select" id="type_user" required>
+        <option selected disabled value="">Choose...</option>
+        <option value="1">Admin</option>
+        <option value="2">Gerente</option>
+      </select>
+      <div class="invalid-feedback">
+        Please select a valid state.
+      </div>
+      <div class="validacion" *ngIf="newUserForm.get('type_user')?.hasError('required') &&  newUserForm.get('type_user')?.touched" >Tipo de usuario obligatorio</div>
+
+    </div> -->
+  
+    <div class="d-flex justify-content-end">
+      <!-- <a  class="btn btn-primary" href="/welcome">Regresar</a> -->
+      <button type="submit"  class="btn btn-primary d-flex gap-2" [disabled]="newUserForm.invalid"><i class="bi bi-person-plus"></i>Registrar</button>
+  
+
+    </div>
+  </form>
+
+</div>
+<app-footer/>
