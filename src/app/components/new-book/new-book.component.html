@@ -1,10 +1,10 @@
 <app-header></app-header>
-<div class="pt-3">
-  <h2 class="mb-2 text-center">New Book</h2>
+<div class="py-5">
+  <h2 class="mb-2 text-center">Nuevo libro</h2>
 
   <div class="container d-flex justify-content-end">
     
-    <a  class="btn btn-danger" href="/welcome"><i class="bi bi-arrow-left-circle"></i> Regresar</a>
+    <a  class="btn btn-primary" href="/welcome"><i class="bi bi-arrow-left-circle"></i> Regresar</a>
   </div>
 
 
@@ -62,22 +62,6 @@
       <div class="validacion" *ngIf="newUserForm.get('topics')?.hasError('required') &&  newUserForm.get('topics')?.touched" >Topics obligatorio</div>
     </div>
     
-    
-
-    <!-- <div class="mb-3">
-      <label for="type_user" class="form-label">TypeUser</label>
-      <select formControlName="type_user"
-        class="form-select" id="type_user" required>
-        <option selected disabled value="">Choose...</option>
-        <option value="1">Admin</option>
-        <option value="2">Gerente</option>
-      </select>
-      <div class="invalid-feedback">
-        Please select a valid state.
-      </div>
-      <div class="validacion" *ngIf="newUserForm.get('type_user')?.hasError('required') &&  newUserForm.get('type_user')?.touched" >Tipo de usuario obligatorio</div>
-
-    </div> -->
   
     <div class="d-flex justify-content-end">
       <!-- <a  class="btn btn-primary" href="/welcome">Regresar</a> -->

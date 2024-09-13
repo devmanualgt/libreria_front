@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
 
-    <div class="card mt-5 py-3 text-center">
+    <div class="card mt-5 py-3 text-center bg-primary text-white">
         <p class="m-0">Todos los los derechos reservados</p>
     </div>
   `,

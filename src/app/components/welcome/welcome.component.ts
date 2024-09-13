@@ -7,6 +7,7 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { Book } from '../../interfaces/all-books.interface';
 import { BookCardComponent } from './book-card/book-card.component';
+import CarouselComponent from '../carousel/carousel.component';
 
 
 @Component({
@@ -16,7 +17,9 @@ import { BookCardComponent } from './book-card/book-card.component';
     UserCardComponent, 
     BookCardComponent,
     HeaderComponent, 
-    FooterComponent],
+    FooterComponent,
+    CarouselComponent
+  ],
   
     templateUrl: './welcome.component.html',
 })
