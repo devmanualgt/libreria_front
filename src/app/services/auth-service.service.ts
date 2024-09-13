@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { UserLogin } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { NewUser } from '../interfaces/new-user.interface';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { MessageService } from './message-service.service';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../environments/environment';
@@ -93,17 +93,7 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/users`, { headers });
   }
 
-  getAllBooks(): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `${this.getToken()}`,
-      // 'access_token': `Bearer ${this.getToken()}`,
-      // 'accessToken': `${this.getToken()}`,
   
-    });
-
-    return this.http.get<any>(`${this.apiUrl}books`, { headers });
-  }
 
   getUserByid(id:number): Observable<any>{
     const headers = new HttpHeaders({
@@ -146,7 +136,19 @@ export class AuthService {
     
   }
 
+ // libros-----------------------------
 
+  getAllBooks(): Observable<any>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${this.getToken()}`,
+      // 'access_token': `Bearer ${this.getToken()}`,
+      // 'accessToken': `${this.getToken()}`,
+  
+    });
+
+    return this.http.get<any>(`${this.apiUrl}books`, { headers });
+  }
   newBook(newBook: newBook ){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -197,6 +199,19 @@ export class AuthService {
         this.message.errorAlert(error.error.message);
       }
     });
+  }
+
+
+  updateBook(bookId: string, updatedData: newBook) {
+    // const idBook = bookId;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${this.getToken()}`
+    });
+    return this.http
+      .put<newBook>(`${this.apiUrl}books/${bookId}`, updatedData, { headers })
+      // .put<newBook>(`${this.apiUrl}books/1`, updatedData, { headers })
+      .pipe(map((data: newBook) => data));
   }
   
 
