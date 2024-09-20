@@ -9,6 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 import { environment } from '../environments/environment';
 import { Book } from '../interfaces/all-books.interface';
 import { newBook } from '../interfaces/new-book';
+import { AuthFacadeServiceService } from './auth-facade-service.service';
 
 
 @Injectable({
@@ -24,49 +25,17 @@ export class AuthService {
   constructor(private http: HttpClient,
     private router: Router,
     private message: MessageService,
+    private authFacade: AuthFacadeServiceService
 
   ) {}
    
   getToken() {
-    return localStorage.getItem('accessToken');
-  }
-  
+      return localStorage.getItem('accessToken');
+  } 
   setToken(token:string): void {
     localStorage.setItem('accessToken', token);
   }
   
-  getCurrentUser(): any {
-    const currentUserString = localStorage.getItem('currentUser');
-    if (currentUserString) {
-      return JSON.parse(currentUserString);
-    }
-    return null;
-  }
-
-  
-  auth(post: UserLogin ){
-    
-    return this.http.post<any>(`${this.apiUrl}auth/login`,post).subscribe({
-      next: (response)=> {
-        
-        this.setToken(response.records.accessToken);
-        this.router.navigate(['/welcome']);
-        
-      },
-      error: (error) => {
-        error;
-        // alert(error.error.message);
-        this.message.errorAlert(error.error.message);
-      }
-      
-    }); 
-  }
-
-  logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
-  }
   
   
   // libros-----------------------------
@@ -91,17 +60,17 @@ export class AuthService {
     
     return this.http.post<any>(`${this.apiUrl}books`,newBook, {headers}).subscribe({
       next: (response)=> {
-          response;
-          this.message.successAlert();
-          this.router.navigate(['/welcome']);
-        },
-        error: (error) => {
+        response;
+        this.message.successAlert();
+        this.router.navigate(['/welcome']);
+      },
+      error: (error) => {
           error;
           this.message.errorAlert(error.error.message);
-
+          
         }
       });
-    
+      
     }
 
     getBookByid(id:number): Observable<any>{
@@ -146,77 +115,101 @@ export class AuthService {
     .pipe(map((data: newBook) => data))
     
     
-
+    
   }
+  //estos metodos ya estan abarcados en el archivo authFacadeservice
   
   //pendientes de implementar
+  
+    // newUser(newUser: NewUser ){
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'access_token': `${this.getToken()}`
 
-  newUser(newUser: NewUser ){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'access_token': `${this.getToken()}`
-
-    });
+    // });
       
-    return this.http.post<any>(`${this.apiUrl}/users/types`,newUser, {headers}).subscribe({
-        next: (response)=> {
-          response;
-          this.message.successAlert();
-          this.router.navigate(['/welcome']);
-        },
-        error: (error) => {
-          error;
-          this.message.errorAlert(error.error.message);
+    // return this.http.post<any>(`${this.apiUrl}/users/types`,newUser, {headers}).subscribe({
+    //     next: (response)=> {
+    //       response;
+    //       this.message.successAlert();
+    //       this.router.navigate(['/welcome']);
+    //     },
+    //     error: (error) => {
+    //       error;
+    //       this.message.errorAlert(error.error.message);
           
-        }
-      });
+    //     }
+    //   });
     
-  }
-
-    isLoggedIn(): boolean {
-      const token = this.getToken();
-      if (token) {
-        // console.log(token);
-        const decodedToken: any = jwtDecode(token); // Decodifico el token
-        // console.log(decodedToken);
-        localStorage.setItem('currentUser', JSON.stringify(decodedToken));
+    // }
+    // isLoggedIn(): boolean {
+    //   const token = this.getToken();
+    //   if (token) {
+    //     // console.log(token);
+    //     const decodedToken: any = jwtDecode(token); // Decodifico el token
+    //     // console.log(decodedToken);
+    //     localStorage.setItem('currentUser', JSON.stringify(decodedToken));
+        
+    //     const expirationDate = new Date(decodedToken.exp * 1000); // Multiplico por 1000 para convertir a milisegundos
+    //     return expirationDate > new Date(); // true or false
+    //   }
+    //   return false;
+    // }
+    // getUsers(): Observable<any>{
+    //   const headers = new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     'access_token': `${this.getToken()}`,
+        
+    //   });
+      
+    //   return this.http.get(`${this.apiUrl}/users`, { headers });
+    // }
+    // getUserByid(id:number): Observable<any>{
+    //   const headers = new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     'access_token': `${this.getToken()}`,
+        
+    //   });
+    //   return this.http.get(`${this.apiUrl}/users/${id}`, { headers });
+      
+    // }
+    // GetTypesUsers(): Observable<any>{
+    //   const headers = new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     'access_token': `${this.getToken()}`,
+    //   });
+    //   return this.http.get(`${this.apiUrl}/users/types`, { headers });
+      
+    // } 
+    // getCurrentUser(): any {
+    //   const currentUserString = localStorage.getItem('currentUser');
+    //   if (currentUserString) {
+    //     return JSON.parse(currentUserString);
+    //   }
+    //   return null;
+    // } 
+    // auth(post: UserLogin ){
+      
+    //   return this.http.post<any>(`${this.apiUrl}auth/login`,post).subscribe({
+    //     next: (response)=> {
+          
+    //       this.setToken(response.records.accessToken);
+    //       this.router.navigate(['/welcome']);
+          
+    //     },
+    //     error: (error) => {
+    //       error;
+    //       // alert(error.error.message);
+    //       this.message.errorAlert(error.error.message);
+    //     }
+        
+    //   }); 
+    // }
+    // logout(): void {
+    //   localStorage.removeItem('accessToken');
+    //   localStorage.removeItem('currentUser');
+    //   this.router.navigate(['/login']);
+    // }
   
-        const expirationDate = new Date(decodedToken.exp * 1000); // Multiplico por 1000 para convertir a milisegundos
-        return expirationDate > new Date(); // true or false
-      }
-      return false;
-    }
-  
-    getUsers(): Observable<any>{
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'access_token': `${this.getToken()}`,
     
-      });
-  
-      return this.http.get(`${this.apiUrl}/users`, { headers });
-    }
-  
-  
-    getUserByid(id:number): Observable<any>{
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'access_token': `${this.getToken()}`,
-    
-      });
-      return this.http.get(`${this.apiUrl}/users/${id}`, { headers });
-   
-    }
-  
-    GetTypesUsers(): Observable<any>{
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'access_token': `${this.getToken()}`,
-      });
-      return this.http.get(`${this.apiUrl}/users/types`, { headers });
-  
-    }
-  
-  
-  
 }

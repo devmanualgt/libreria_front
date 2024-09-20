@@ -47,7 +47,7 @@ export default class NewUserComponent {
    
     }
 
-    this.AuthService.newUser(newUser);
+    // this.AuthService.newUser(newUser);
    
 
 

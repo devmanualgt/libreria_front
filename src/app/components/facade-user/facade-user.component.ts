@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { AuthFacadeServiceService } from '../../services/auth-facade-service.service';
 
 @Component({
   selector: 'app-facade-user',
@@ -56,5 +57,20 @@ import { RouterModule } from '@angular/router';
   `
 })
 export default class FacadeUserComponent {
+  
+  ngOnInit(): void{
+    // this.currentUser = this.AuthService.getCurrentUser();
+    this.getUser();
+
+  }
+
+  constructor(private authFacade: AuthFacadeServiceService){
+  }
+
+  getUser(){
+    // this.authFacade.getUserById(1)
+    console.log(this.authFacade.getUserById(1))
+  }
+
 
 }

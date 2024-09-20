@@ -3,29 +3,50 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TypeUser } from '../interfaces/type-user.interface';
 import { environment } from '../environments/environment';
+import { MessageService } from './message-service.service';
+import { NewUser } from '../interfaces/new-user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiUrl = environment.apiUrl;
-  constructor(private http: HttpClient) {  }
 
-  // Obtener detalles de usuario por su ID
-  getUserDetails(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}users/${userId}`);
+  constructor(private http: HttpClient, private message: MessageService) {}
+
+  getUsers(): Observable<any> {
+    const headers = this.createHeaders();
+    return this.http.get(`${this.apiUrl}/users`, { headers });
   }
 
+  getUserById(id: number): Observable<any> {
+    const headers = this.createHeaders();
+    return this.http.get<any>(`${this.apiUrl}/users/${id}`, { headers });
+  }
 
-  getUserByid(id:number, token:string): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'access_token': token,
-      // 'access_token': `${this.getToken()}`,
-  
+  getTypesUsers(): Observable<any> {
+    const headers = this.createHeaders();
+    return this.http.get(`${this.apiUrl}/users/types`, { headers });
+  }
+
+  newUser(newUser: NewUser) {
+    const headers = this.createHeaders();
+    return this.http.post<any>(`${this.apiUrl}/users/types`, newUser, { headers }).subscribe({
+      next: (response) => {
+        this.message.successAlert();
+      },
+      error: (error) => {
+        this.message.errorAlert(error.error.message);
+      }
     });
-    return this.http.get(`${this.apiUrl}users/${id}`, { headers });
- 
   }
 
+  // Helper function to create headers with token
+  private createHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'access_token': `${localStorage.getItem('accessToken')}`
+    });
+  }
+  
 }

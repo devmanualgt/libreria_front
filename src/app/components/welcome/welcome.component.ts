@@ -33,22 +33,22 @@ export default class WelcomeComponent implements OnInit{
 
   
   ngOnInit(): void{
-    this.currentUser = this.AuthService.getCurrentUser();
+    // this.currentUser = this.AuthService.getCurrentUser();
     // this.getUsers();
     this.getBooks();
 
   }
 
 
-  getUsers(){
-    this.AuthService.getUsers().subscribe({
-      next: (response: User[])=> {
-        this.usersData = response;
-      },
-      error: (error) => {error}
-    });
+  // getUsers(){
+  //   this.AuthService.getUsers().subscribe({
+  //     next: (response: User[])=> {
+  //       this.usersData = response;
+  //     },
+  //     error: (error) => {error}
+  //   });
 
-  }
+  // }
   getBooks(){
     this.AuthService.getAllBooks().subscribe({
       next: (response)=> {

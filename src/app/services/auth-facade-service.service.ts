@@ -11,50 +11,38 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthFacadeServiceService {
-  private apiUrl = environment.apiUrl;
 
-  constructor(private loginService: LoginService, private userService: UserService) { }
+  constructor(private authService: LoginService, private userService: UserService) {}
 
-
-  // login(username: string, password: string): Observable<any> {
-  //   return this.loginService.login(username, password).pipe(
-  //     switchMap(user => this.userService.getUserDetails(user.id))
-  //   );
-  // }
-  
-  login(username: string, password: string) {
-    this.loginService.login(username, password)
+  login(username: string, password: string): void {
+    this.authService.auth({ username, password });
+    // this.authService.
   }
-
-  getToken(){
-    return this.loginService.getToken()
-  }
-
-  // auth(username: string, password: string ){
-    
-  //   return this.http.post<any>(`${this.apiUrl}auth/login`,post).subscribe({
-  //     next: (response)=> {
-        
-  //       this.setToken(response.records.accessToken);
-  //       this.router.navigate(['/welcome']);
-        
-  //     },
-  //     error: (error) => {
-  //       error;
-  //       // alert(error.error.message);
-  //       this.message.errorAlert(error.error.message);
-  //     }
-      
-  //   }); 
-  // }
 
   logout(): void {
-    this.loginService.logout();
+    this.authService.logout();
   }
 
-  // getUserProfile(): Observable<TypeUser> {
-  //   return this.userService.getUserProfile();
-  // }
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  getUsers(): Observable<any> {
+    return this.userService.getUsers();
+  }
+
+  getUserById(id: number): Observable<any> {
+    return this.userService.getUserById(id);
+  }
+
+  getUserTypes(): Observable<any> {
+    return this.userService.getTypesUsers();
+  }
+
+  getCurrentUser(): Observable<any> {
+    return this.authService.getCurrentUser();
+  }
+
 
   
 

@@ -71,17 +71,17 @@ export default class UserInformationComponent {
 
   constructor(private authService: AuthService) {
 
-    this.authService.getUsers().subscribe({
-      next: (response: any[]) => {
-        this.users = response;
-        const userId = parseInt(this.route.snapshot.params['id'], 10);
-        this.user = this.users.find(user => user.id === userId);
-        // console.log(this.user);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    // this.authService.getUsers().subscribe({
+    //   next: (response: any[]) => {
+    //     this.users = response;
+    //     const userId = parseInt(this.route.snapshot.params['id'], 10);
+    //     this.user = this.users.find(user => user.id === userId);
+    //     // console.log(this.user);
+    //   },
+    //   error: (error) => {
+    //     console.error(error);
+    //   }
+    // });
   }
 
   getObjectKeys(obj: any): string[] {
