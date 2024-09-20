@@ -16,6 +16,10 @@ import { newBook } from '../interfaces/new-book';
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
+  //apiUrl = 'https://api-library-umg.vercel.app/api/'
+  // GET:/users/{user_id}
+// PUT:/users/{user_id}
+// DELETE:/users/{user_id}
 
   constructor(private http: HttpClient,
     private router: Router,

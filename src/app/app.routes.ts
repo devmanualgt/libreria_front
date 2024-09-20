@@ -41,6 +41,12 @@ export const routes: Routes = [
         loadComponent: () => import ('./components/new-book/new-book.component'),
         canMatch:[authGuard],
     },
+    {
+        path: 'facade-user',
+        title: 'Facade-user',
+        loadComponent: () => import ('./components/facade-user/facade-user.component'),
+        canMatch:[authGuard],
+    },
 
     {
         path: '',
