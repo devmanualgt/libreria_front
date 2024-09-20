@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth-service.service';
 import { RouterModule } from '@angular/router';
 import { AuthFacadeServiceService } from '../../services/auth-facade-service.service';
+import { UserInformation } from '../../interfaces/facade-user.interface';
 
 @Component({
   selector: 'app-header',
@@ -10,22 +11,24 @@ import { AuthFacadeServiceService } from '../../services/auth-facade-service.ser
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
+  currentUser: UserInformation | undefined;
+  user: UserInformation | null = null;
 
-  currentUser:any;
+  constructor(
+    private authService: AuthService,
+    public authFacade: AuthFacadeServiceService
+  ) {}
 
-  constructor(private authService:AuthService, 
-    private authFacade: AuthFacadeServiceService){}
+  async ngOnInit() {
+    //this.currentUser = await this.authFacade.getProfile();
 
-  ngOnInit(): void {
-    // this.currentUser = this.authService.getCurrentUser();
+    this.authFacade.getProfile().subscribe((userInfo) => {
+      this.user = userInfo;
+    });
   }
 
-  logout(){
+  logout() {
     // this.authService.logout();
-    this.authFacade.logout()
+    this.authFacade.logout();
   }
-
-
 }
-
-

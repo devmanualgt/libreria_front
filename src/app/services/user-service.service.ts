@@ -7,7 +7,7 @@ import { MessageService } from './message-service.service';
 import { NewUser } from '../interfaces/new-user.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private apiUrl = environment.apiUrl;
@@ -16,12 +16,19 @@ export class UserService {
 
   getUsers(): Observable<any> {
     const headers = this.createHeaders();
-    return this.http.get(`${this.apiUrl}/users`, { headers });
+    return this.http.get(`${this.apiUrl}users`, { headers });
   }
 
-  getUserById(id: number): Observable<any> {
+  async getUserById(id: number): Promise<any> {
     const headers = this.createHeaders();
-    return this.http.get<any>(`${this.apiUrl}/users/${id}`, { headers });
+    try {
+      const respose = await this.http
+        .get<any>(`${this.apiUrl}users/${id}`, { headers })
+        .toPromise();
+      if (respose['status']) {
+        return respose;
+      }
+    } catch (error) {}
   }
 
   getTypesUsers(): Observable<any> {
@@ -31,22 +38,23 @@ export class UserService {
 
   newUser(newUser: NewUser) {
     const headers = this.createHeaders();
-    return this.http.post<any>(`${this.apiUrl}/users/types`, newUser, { headers }).subscribe({
-      next: (response) => {
-        this.message.successAlert();
-      },
-      error: (error) => {
-        this.message.errorAlert(error.error.message);
-      }
-    });
+    return this.http
+      .post<any>(`${this.apiUrl}/users/types`, newUser, { headers })
+      .subscribe({
+        next: (response) => {
+          this.message.successAlert();
+        },
+        error: (error) => {
+          this.message.errorAlert(error.error.message);
+        },
+      });
   }
 
   // Helper function to create headers with token
   private createHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'access_token': `${localStorage.getItem('accessToken')}`
+      authorization: `${localStorage.getItem('accessToken')}`,
     });
   }
-  
 }

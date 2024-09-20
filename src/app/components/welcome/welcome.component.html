@@ -1,27 +1,25 @@
 <app-header></app-header>
-<app-carousel/>
+<app-carousel />
 
 <section class="container py-5">
-    
-    <div class="my-5">
-        <h2>Disfruta nuestra coleccion de libros</h2>
-    </div>
-    <div class="container d-flex justify-content-end align-items-end">
-        <a class="btn btn-primary mb-5" href="/new-book" ><i class="bi bi-person-plus"></i> Nuevo Libro</a>
+  <div class="my-5">
+    <h2>Disfruta nuestra coleccion de libros</h2>
+  </div>
+  <div class="container d-flex justify-content-end align-items-end">
+    <a class="btn btn-primary mb-5" href="/new-book"
+      ><i class="bi bi-person-plus"></i> Nuevo Libro</a
+    >
+  </div>
 
+  <div class="row text-center">
+    <!-- <h3>Vista de {{currentUser.type_user.type}}</h3> -->
+    @for (book of booksData; track $index) {
+    <div class="col d-flex my-2 justify-content-center">
+      <!-- <app-user-card [user]="user"></app-user-card> -->
+      <app-book-card [book]="book"></app-book-card>
     </div>
-    
-    <div class="row text-center ">
-
-            <!-- <h3>Vista de {{currentUser.type_user.type}}</h3> -->
-            @for (book of booksData; track $index) {
-                <div class="col d-flex my-2 justify-content-center">
-                    <!-- <app-user-card [user]="user"></app-user-card> -->
-                     <app-book-card [book]="book"></app-book-card>
-                </div>
-            }  
-    </div>
-
+    }
+  </div>
 </section>
 
-<app-footer/>
+<app-footer />

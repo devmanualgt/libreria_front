@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth-service.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,27 +18,29 @@ import { UserService } from '../services/user-service.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule,ReactiveFormsModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
- 
 export default class LoginComponent {
-
-
   loginForm: FormGroup;
-  currentUser:any;
+  currentUser: any;
 
-
-  constructor(private authFacade: AuthFacadeServiceService,
+  constructor(
+    private authFacade: AuthFacadeServiceService,
     private userService: UserService,
-    private fb: FormBuilder){
+    private fb: FormBuilder
+  ) {
     this.loginForm = this.fb.group({
-      user: ['',Validators.required],
+      user: ['', Validators.required],
       password: ['', Validators.required],
-
-    }); 
-
+    });
   }
 
   // ngOnInit(): void{
@@ -41,16 +50,12 @@ export default class LoginComponent {
 
   // }
 
+  auth() {
+    const username = this.loginForm.value.user ?? '';
+    const password = this.loginForm.value.password ?? '';
 
-  auth(){
-    
-    const username = this.loginForm.value.user??'';
-    const password = this.loginForm.value.password??'';    
-    
-
-    this.authFacade.login(username,password)
+    this.authFacade.login(username, password);
   }
-
 
   // getUsers(){
   //   this.AuthService.getUsers().subscribe({
@@ -67,5 +72,4 @@ export default class LoginComponent {
   //   });
 
   // }
-
 }

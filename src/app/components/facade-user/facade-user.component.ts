@@ -8,69 +8,74 @@ import { AuthFacadeServiceService } from '../../services/auth-facade-service.ser
 @Component({
   selector: 'app-facade-user',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    HeaderComponent,
-    FooterComponent,
-  ],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   template: `
-  <app-header/>
-  <section class="container py-5">
+    <app-header></app-header>
 
-    <h2 class="text-center">Mi Estatus</h2>  
-    <div class="d-flex justify-content-center py-5">
-    
-      <div class="card" 
+    <section class="container after-header">
+      <h2 class="text-center">Mi Perfil</h2>
+      <div class="d-flex justify-content-center py-5">
+        <div
+          class="card"
           style="
             width: 18rem;
-          
-          ">
-    
-        <div class="card-body">
-          <!-- @if (admin) {
+
+          "
+        >
+          <div class="card-body" *ngIf="user_data">
+            <!-- @if (admin) {
             <i class="fa-solid fa-user-tie"></i>
-            
+
           } else{
             <i class="fa-regular fa-user"></i>
           } -->
-          
-        <i class="fa-regular fa-user"></i>
-        <p class="card-title fs-3"><span class="fw-bolder"></span></p>
-        <p class="card-text"><span class="fw-bold">Nombre:</span></p>
-        <p class="card-text"><span class="fw-bold">Apellido:</span></p>
-        <p class="card-text"><span class="fw-bold">Email:</span> </p>
-        <p class="card-text"><span class="fw-bold">Username:</span> </p>
-        <div class="d-flex justify-content-evenly gap-2">
-          <a [routerLink]="['/welcome']" class="btn btn-primary " style="width: 100%;" ><i class="bi bi-arrow-left-circle"></i> Regresar</a>
-          <!-- <a  class="btn btn-primary" href="/welcome"><i class="bi bi-arrow-left-circle"></i> Regresar</a> -->
-          
-        </div>
-    
+
+            <div class="d-flex justify-content-center">
+              <i class="fas fa-user" style="font-size: 100px;"></i>
+            </div>
+            <p class="card-title fs-3"><span class="fw-bolder"></span></p>
+            <p class="card-text">
+              <span class="fw-bold">Nombre: {{ user_data.firstName }}</span>
+            </p>
+            <p class="card-text">
+              <span class="fw-bold">Apellido: {{ user_data.lastName }}</span>
+            </p>
+            <p class="card-text">
+              <span class="fw-bold">Email: {{ user_data.email }}</span>
+            </p>
+            <p class="card-text">
+              <span class="fw-bold">Username: {{ user_data.username }}</span>
+            </p>
+            <div class="d-flex justify-content-evenly gap-2">
+              <a
+                [routerLink]="['/welcome']"
+                class="btn btn-primary "
+                style="width: 100%;"
+                ><i class="bi bi-arrow-left-circle"></i> Regresar</a
+              >
+              <!-- <a  class="btn btn-primary" href="/welcome"><i class="bi bi-arrow-left-circle"></i> Regresar</a> -->
+            </div>
+          </div>
         </div>
       </div>
-  
-    </div>
-  </section>
-
-  
-  `
+    </section>
+  `,
 })
 export default class FacadeUserComponent {
-  
-  ngOnInit(): void{
-    // this.currentUser = this.AuthService.getCurrentUser();
+  user_data: any;
+  ngOnInit(): void {
     this.getUser();
-
   }
 
-  constructor(private authFacade: AuthFacadeServiceService){
+  constructor(private authFacade: AuthFacadeServiceService) {}
+
+  async getUser() {
+    const user = JSON.parse(localStorage.getItem('currentUser') || '');
+    const data = await this.authFacade.getUserById(user.sub);
+    if (data['status']) {
+      this.user_data = data['records'];
+    }
+
+    console.log(this.user_data);
   }
-
-  getUser(){
-    // this.authFacade.getUserById(1)
-    console.log(this.authFacade.getUserById(1))
-  }
-
-
 }
