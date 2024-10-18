@@ -1,0 +1,9 @@
+{
+  "routes": [
+    "/facade-user",
+    "/login",
+    "/new-book",
+    "/new-user",
+    "/welcome"
+  ]
+}

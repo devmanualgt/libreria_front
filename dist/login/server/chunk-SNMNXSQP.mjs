@@ -1,0 +1,2 @@
+import './polyfills.server.mjs';
+import{$ as i,W as r,X as a,da as s,o as n}from"./chunk-67O63YUE.mjs";var m=(()=>{let e=class e{};e.\u0275fac=function(o){return new(o||e)},e.\u0275cmp=n({type:e,selectors:[["app-footer"]],standalone:!0,features:[s],decls:3,vars:0,consts:[[1,"card","mt-5","py-3","text-center","bg-primary","text-white"],[1,"m-0"]],template:function(o,p){o&1&&(r(0,"div",0)(1,"p",1),i(2,"Todos los los derechos reservados"),a()())},encapsulation:2});let t=e;return t})();export{m as a};
