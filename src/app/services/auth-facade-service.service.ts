@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
 import { BehaviorSubject, Observable, Subject, switchMap } from 'rxjs';
-import { TypeUser } from '../interfaces/type-user.interface';
-import { AuthService } from './auth-service.service';
 import { LoginService } from './login-service.service';
 import { UserService } from './user-service.service';
-import { HttpHeaders } from '@angular/common/http';
-import { UserInformation, userInit } from '../interfaces/facade-user.interface';
+import { UserInformation } from '../interfaces/facade-user.interface';
 @Injectable({
   providedIn: 'root',
 })
